@@ -31,6 +31,8 @@ app.use('/api/dashboard', dashboardRouter)
 
 
 
-app.listen(5000, () => {
-    console.log("Server is Running on port 5000")
-})
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`Server is Running on port ${PORT}`);
+});
