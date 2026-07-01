@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from 'express'
 import cors from 'cors'
 import authRouter from './routes/auth.js'
@@ -28,6 +31,9 @@ app.use('/api/salary', salaryRouter)
 app.use('/api/leave', leaveRouter)
 app.use('/api/setting', settingRouter)
 app.use('/api/dashboard', dashboardRouter)
+app.get("/", (req, res) => {
+  res.send("Employee Management API is running 🚀");
+});
 
 
 
