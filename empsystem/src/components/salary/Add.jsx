@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchDepartments, getEmployees } from "../../utils/EmployeeHelper";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../../utils/api";
 
 const Add = () => {
   const [salary, setSalary] = useState({
@@ -36,10 +37,11 @@ const Add = () => {
   const handleDepartment = async (e) => {
     const departmentId = e.target.value;
 
-    setSalary({
-      ...salary,
+    setSalary((prev) => ({
+      ...prev,
       department: departmentId,
-    });
+      employeeId: "",
+    }));
 
     try {
       const emps = await getEmployees(departmentId);
@@ -65,7 +67,7 @@ const Add = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/salary/add",
+        `${API_URL}/api/salary/add`,
         salary,
         {
           headers: {
@@ -75,7 +77,6 @@ const Add = () => {
       );
 
       if (response.data.success) {
-        
         navigate("/admin-dashboard/employees");
       }
     } catch (error) {

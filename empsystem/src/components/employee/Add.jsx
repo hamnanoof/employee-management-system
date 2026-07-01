@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchDepartments } from "../../utils/EmployeeHelper";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../../utils/api";
 
 const Add = () => {
   const [departments, setDepartments] = useState([]);
@@ -58,7 +59,7 @@ const Add = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/employee/add",
+        `${API_URL}/api/employee/add`,
         formDataObj,
         {
           headers: {
@@ -73,9 +74,7 @@ const Add = () => {
       }
     } catch (error) {
       console.error(error);
-      alert(
-        error.response?.data?.error || "Failed to add employee"
-      );
+      alert(error.response?.data?.error || "Failed to add employee");
     }
   };
 
@@ -230,24 +229,24 @@ const Add = () => {
               required
             />
           </div>
-          {/* Role */}
-<div>
-  <label className="block text-sm font-medium">
-    Role
-  </label>
 
-  <select
-    name="role"
-    value={formData.role}
-    onChange={handleChange}
-    className="mt-1 p-2 block w-full border  rounded-md"
-    required
-  >
-    <option value="">Select Role</option>
-    <option value="admin">Admin</option>
-    <option value="employee">Employee</option>
-  </select>
-</div>
+          <div>
+            <label className="block text-sm font-medium">
+              Role
+            </label>
+
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="mt-1 p-2 block w-full border rounded-md"
+              required
+            >
+              <option value="">Select Role</option>
+              <option value="admin">Admin</option>
+              <option value="employee">Employee</option>
+            </select>
+          </div>
 
           <div>
             <label className="block text-sm font-medium">

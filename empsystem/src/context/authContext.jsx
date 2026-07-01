@@ -1,3 +1,4 @@
+import API_URL from "../utils/api";
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 
@@ -19,7 +20,7 @@ const AuthContext = ({ children }) => {
                 if (token) {
 
                     const response = await axios.get(
-                        'http://localhost:5000/api/auth/verify',
+    `${API_URL}/api/auth/verify`,
                         {
                             headers: {
                                 Authorization: `Bearer ${token}`

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/authContext";
 import { Link } from "react-router-dom";
+import API_URL from "../../utils/api";
 
 const List = () => {
   const [leaves, setLeaves] = useState([]);
@@ -13,7 +14,7 @@ const List = () => {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/leave/${user._id}`,
+          `${API_URL}/api/leave/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

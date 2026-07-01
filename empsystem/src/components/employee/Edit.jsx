@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchDepartments } from "../../utils/EmployeeHelper";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import API_URL from "../../utils/api";
 
 const Edit = () => {
   const [employee, setEmployee] = useState({
@@ -36,7 +37,7 @@ const Edit = () => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/employee/${id}`,
+          `${API_URL}/api/employee/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,7 +47,7 @@ const Edit = () => {
 
         if (response.data.success) {
           const emp = response.data.employee;
-          // Flatten the nested userId.name into top-level state
+
           setEmployee({
             name: emp.userId?.name || "",
             maritalStatus: emp.maritalStatus || "",
@@ -83,7 +84,7 @@ const Edit = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/employee/${id}`,
+        `${API_URL}/api/employee/${id}`,
         {
           name: employee.name,
           maritalStatus: employee.maritalStatus,
@@ -99,7 +100,6 @@ const Edit = () => {
       );
 
       if (response.data.success) {
-        
         navigate("/admin-dashboard/employees");
       }
     } catch (error) {
@@ -117,7 +117,6 @@ const Edit = () => {
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-          {/* Name */}
           <div>
             <label className="block text-sm font-medium">Name</label>
             <input
@@ -130,7 +129,6 @@ const Edit = () => {
             />
           </div>
 
-          {/* Marital Status */}
           <div>
             <label className="block text-sm font-medium">Marital Status</label>
             <select
@@ -146,7 +144,6 @@ const Edit = () => {
             </select>
           </div>
 
-          {/* Designation */}
           <div>
             <label className="block text-sm font-medium">Designation</label>
             <input
@@ -159,7 +156,6 @@ const Edit = () => {
             />
           </div>
 
-          {/* Salary */}
           <div>
             <label className="block text-sm font-medium">Salary</label>
             <input
@@ -172,7 +168,6 @@ const Edit = () => {
             />
           </div>
 
-          {/* Department */}
           <div className="col-span-2">
             <label className="block text-sm font-medium">Department</label>
             <select
@@ -183,6 +178,7 @@ const Edit = () => {
               required
             >
               <option value="">Select Department</option>
+
               {departments.map((dep) => (
                 <option key={dep._id} value={dep._id}>
                   {dep.dep_name}

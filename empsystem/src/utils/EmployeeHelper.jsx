@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import  API_URL  from "./api";
 
 export const columns = [
   {
@@ -39,7 +40,7 @@ export const columns = [
 export const fetchDepartments = async () => {
   try {
     const response = await axios.get(
-      "http://localhost:5000/api/department",
+      `${API_URL}/api/department`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -63,7 +64,7 @@ export const fetchDepartments = async () => {
 export const getEmployees = async (id) => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/employee/department/${id}`,
+      `${API_URL}/api/employee/department/${id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -129,8 +130,6 @@ export const EmployeeButtons = ({ Id }) => {
       >
         Leave
       </button>
-
-      
     </div>
   );
 };

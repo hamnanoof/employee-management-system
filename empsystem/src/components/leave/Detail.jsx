@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_URL from "../../utils/api";
 
 const Detail = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const Detail = () => {
     const fetchLeave = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/leave/detail/${id}`,
+          `${API_URL}/api/leave/detail/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -37,7 +38,7 @@ const Detail = () => {
   const changeStatus = async (id, status) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/leave/update/${id}`,
+        `${API_URL}/api/leave/update/${id}`,
         { status },
         {
           headers: {
@@ -58,7 +59,6 @@ const Detail = () => {
     }
   };
 
-  // Loading State
   if (!leave) {
     return (
       <div className="text-center mt-10 text-lg font-semibold">
@@ -67,7 +67,6 @@ const Detail = () => {
     );
   }
 
-  // Invalid Employee Data
   if (!leave.employeeId || !leave.employeeId.userId) {
     return (
       <div className="text-center mt-10 text-red-600">
@@ -85,7 +84,7 @@ const Detail = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex justify-center">
           <img
-            src={`http://localhost:5000/${leave.employeeId.userId.profileImage}`}
+            src={`${API_URL}/${leave.employeeId.userId.profileImage}`}
             alt={leave.employeeId.userId.name}
             className="w-64 h-64 object-cover rounded-full border"
           />

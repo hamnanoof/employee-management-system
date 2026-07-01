@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../../utils/api";
 
 const Add = () => {
   const { user } = useAuth();
@@ -29,7 +30,7 @@ const Add = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/leave/add",
+        `${API_URL}/api/leave/add`,
         leave,
         {
           headers: {
@@ -58,7 +59,6 @@ const Add = () => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-4">
 
-          {/* Leave Type */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Leave Type
@@ -78,7 +78,6 @@ const Add = () => {
             </select>
           </div>
 
-          {/* From Date */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               From Date
@@ -94,7 +93,6 @@ const Add = () => {
             />
           </div>
 
-          {/* To Date */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               To Date
@@ -110,7 +108,6 @@ const Add = () => {
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Description
@@ -127,7 +124,6 @@ const Add = () => {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full mt-6 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"

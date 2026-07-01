@@ -1,37 +1,38 @@
-import React from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import  API_URL  from "./api";
 
 const DepartmentButtons = ({ _id, onDepartmentDelete }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm(
-      'Do you want to delete this department?'
-    )
+      "Do you want to delete this department?"
+    );
 
-    if (!confirmed) return
+    if (!confirmed) return;
 
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/department/${id}`,
+        `${API_URL}/api/department/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      )
+      );
 
       if (response.data.success) {
-        onDepartmentDelete()
+        onDepartmentDelete();
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
       alert(
-        error.response?.data?.error || 'Failed to delete department'
-      )
+        error.response?.data?.error || "Failed to delete department"
+      );
     }
-  }
+  };
 
   return (
     <div className="flex space-x-3">
@@ -51,7 +52,7 @@ const DepartmentButtons = ({ _id, onDepartmentDelete }) => {
         Delete
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default DepartmentButtons
+export default DepartmentButtons;

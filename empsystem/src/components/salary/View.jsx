@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import  API_URL  from "../../utils/api";
 
 const View = () => {
   const [salaries, setSalaries] = useState([]);
@@ -13,15 +14,13 @@ const View = () => {
   const fetchSalaries = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/salary/${id}`,
+        `${API_URL}/api/salary/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-
-      console.log(response.data);
 
       if (response.data.success) {
         setSalaries(response.data.salary);
@@ -38,7 +37,7 @@ const View = () => {
 
   useEffect(() => {
     fetchSalaries();
-  }, []);
+  }, [id]);
 
   const filterSalaries = (q) => {
     const filteredRecords = salaries.filter((salary) =>
@@ -112,9 +111,7 @@ const View = () => {
                     </td>
 
                     <td className="px-6 py-3">
-                      {new Date(
-                        salary.payDate
-                      ).toLocaleDateString()}
+                      {new Date(salary.payDate).toLocaleDateString()}
                     </td>
                   </tr>
                 ))}

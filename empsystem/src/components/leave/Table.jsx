@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 import { columns, LeaveButtons } from "../../utils/LeaveHelper";
+import API_URL from "../../utils/api";
 
 const Table = () => {
   const [leaves, setLeaves] = useState([]);
@@ -11,7 +12,7 @@ const Table = () => {
   const fetchLeaves = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/leave",
+        `${API_URL}/api/leave`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,18 +68,14 @@ const Table = () => {
 
     setFilteredLeaves(data);
   };
-  
 
   const filterByButton = (status) => {
-   
-
     const data = leaves.filter((leave) =>
       leave.status?.toLowerCase().includes(status.toLowerCase())
     );
 
     setFilteredLeaves(data);
   };
-  
 
   return (
     <>
@@ -101,18 +98,24 @@ const Table = () => {
             />
 
             <div className="space-x-3">
-              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
-              onClick={()=> filterByButton("Pending")}>
+              <button
+                className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
+                onClick={() => filterByButton("Pending")}
+              >
                 Pending
               </button>
 
-              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
-               onClick={()=> filterByButton("Approved")}>
+              <button
+                className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
+                onClick={() => filterByButton("Approved")}
+              >
                 Approved
               </button>
 
-              <button className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
-               onClick={()=> filterByButton("Rejected")}>
+              <button
+                className="px-2 py-1 bg-teal-600 text-white hover:bg-teal-700"
+                onClick={() => filterByButton("Rejected")}
+              >
                 Rejected
               </button>
             </div>

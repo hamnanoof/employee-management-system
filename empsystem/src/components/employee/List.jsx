@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import DataTable from 'react-data-table-component'
-import { columns, EmployeeButtons } from '../../utils/EmployeeHelper'
-import axios from 'axios'
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import DataTable from "react-data-table-component";
+import { columns, EmployeeButtons } from "../../utils/EmployeeHelper";
+import axios from "axios";
+import API_URL from "../../utils/api";
 
 const List = () => {
-  const [employees, setEmployees] = useState([])
-  const [empLoading, setEmpLoading] = useState(false)
-  const [filteredEmployee, setFilteredEmployees] = useState([])
+  const [employees, setEmployees] = useState([]);
+  const [empLoading, setEmpLoading] = useState(false);
+  const [filteredEmployee, setFilteredEmployees] = useState([]);
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      setEmpLoading(true)
+      setEmpLoading(true);
 
       try {
         const response = await axios.get(
-          'http://localhost:5000/api/employee',
+          `${API_URL}/api/employee`,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
-        )
+        );
 
         if (response.data.success) {
-          let sno = 1
+          let sno = 1;
 
           const data = response.data.employees.map((emp) => ({
             _id: emp._id,
@@ -36,37 +37,37 @@ const List = () => {
               <img
                 width={40}
                 className="rounded-full"
-                src={`http://localhost:5000/${emp.userId?.profileImage}`}
+                src={`${API_URL}/${emp.userId?.profileImage}`}
                 alt="Employee"
               />
             ),
             action: <EmployeeButtons Id={emp._id} />,
-          }))
+          }));
 
-          setEmployees(data)
-          setFilteredEmployees(data)
+          setEmployees(data);
+          setFilteredEmployees(data);
         }
       } catch (error) {
-        console.error(error)
+        console.error(error);
 
         if (error.response) {
-          alert(error.response.data.error)
+          alert(error.response.data.error);
         }
       } finally {
-        setEmpLoading(false)
+        setEmpLoading(false);
       }
-    }
+    };
 
-    fetchEmployees()
-  }, [])
+    fetchEmployees();
+  }, []);
 
   const handleFilter = (e) => {
     const records = employees.filter((emp) =>
       emp.name?.toLowerCase().includes(e.target.value.toLowerCase())
-    )
+    );
 
-    setFilteredEmployees(records)
-  }
+    setFilteredEmployees(records);
+  };
 
   return (
     <div className="p-5">
@@ -99,7 +100,7 @@ const List = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default List
+export default List;
